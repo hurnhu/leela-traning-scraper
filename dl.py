@@ -19,24 +19,24 @@ def downloadItem(theCount):
    for tarinfo in tar:
         #f = tar.extractfile(member)
         if tarinfo.isreg():
-#            mpHandle(tar,tarinfo)
-            exect=tar.extractfile(tarinfo.name)
-            f = gzip.open(os.getcwd()+'/pack/'+tarinfo.name+'.gz','wb')
-            f.write(exect.read())
-            f.close()
+            mpHandle(tar,tarinfo)
+#            exect=tar.extractfile(tarinfo.name)
+#            f = gzip.open(os.getcwd()+'/pack/'+tarinfo.name+'.gz','wb')
+#            f.write(exect.read())
+#            f.close()
    tar.close()
 
-#def eAnds(tar,tarinfo):
-#    exect=tar.extractfile(tarinfo.name)
-#    f = gzip.open(os.getcwd()+'/pack/'+tarinfo.name+'.gz','wb')
-#    f.write(exect.read())
-#    f.close()
+def eAnds(tar,tarinfo):
+    exect=tar.extractfile(tarinfo.name)
+    f = gzip.open(os.getcwd()+'/pack/'+tarinfo.name+'.gz','wb')
+    f.write(exect.read())
+    f.close()
 
-#def mpHandle(a,b):
-#    q = multiprocessing.Queue()
-#    #p = multiprocessing.Pool(1)
-#    p=multiprocessing.Process(target=eAnds(a,b), args=(q,))
-#    p.start()
+def mpHandle(a,b):
+    q = multiprocessing.Queue()
+    #p = multiprocessing.Pool(1)
+    p=multiprocessing.Process(target=eAnds(a,b), args=(q,))
+    p.start()
 
 def worker():
     while True:
