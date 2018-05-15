@@ -14,12 +14,15 @@ def downloadItem(theCount):
    fn = ("games"+str(theCount)+".tar.gz") 
    # urllib.request.urlretrieve("https://s3.amazonaws.com/lczero/training/games"+str(theCount)+".tar.gz", os.path.join(os.getcwd()+"/game/", fn))
    # tar = tarfile.open(os.path.join(os.getcwd()+"/game/", fn), "r:gz")
+   print("downloading: " + str(theCount))
    response = io.BytesIO(urllib.request.urlopen("https://s3.amazonaws.com/lczero/training/games"+str(theCount)+".tar.gz").read())
+   print("done downloading: " + str(theCount))
    tar = tarfile.open(mode="r:gz",fileobj=response)
    for tarinfo in tar:
         #f = tar.extractfile(member)
         if tarinfo.isreg():
 #            mpHandle(tar,tarinfo)
+            print("packing: " + tarinfo.name)
             exect=tar.extractfile(tarinfo.name)
             f = gzip.open(os.getcwd()+'/pack/'+tarinfo.name+'.gz','wb')
             f.write(exect.read())
