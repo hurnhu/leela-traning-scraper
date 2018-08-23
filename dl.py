@@ -57,7 +57,7 @@ def downloadItem(theCount):
 
 #   response = io.BytesIO(urllib.request.urlopen("http://data.lczero.org/files/training-" + str(time.strftime("%Y%m%d")) + "-" + str(theCount).zfill(2) + "17.tar").read())
    print('downloaded')
-   tar = tarfile.open(mode="r",fileobj=response)
+   tar = tarfile.open(mode="r",fileobj=buf)
    for tarinfo in tar:
         #f = tar.extractfile(member)
         if tarinfo.isreg():
