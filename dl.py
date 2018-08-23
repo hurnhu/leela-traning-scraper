@@ -10,12 +10,23 @@ import gzip
 import tarfile
 import io
 lock = threading.Lock()
+parser = argparse.ArgumentParser(description='Process some integers.')
+parser.add_argument('--start', dest='start')
+parser.add_argument('--end', dest='end')
+parser.add_argument('--date', dest='date')
+parser.add_argument('--t', dest='threads')
+args = parser.parse_args()
+start= args.start
+end= args.end
+count = start
+date = args.date
 def downloadItem(theCount):
    #t3 = Process(target=worker2,args=(q2,))
    #t3.start()
    #t3 = Process(target=worker2,args=(q2,))
    #t3.start()
-   print(str(theCount))
+   print(args.date)
+   print(date)
    dateToUse = time.strftime("%Y%m%d");
    if date is not None:
       dateToUse = date
@@ -24,7 +35,7 @@ def downloadItem(theCount):
    # tar = tarfile.open(os.path.join(os.getcwd()+"/game/", fn), "r:gz")
    print("http://data.lczero.org/files/training-" + str(time.strftime("%Y%m%d")) + "-" + str(theCount).zfill(2) + "17.tar")
    downloaded = 0
-   chunkSize = 4096
+   chunkSize = 1228800
    urlObj = urllib.request.urlopen("http://data.lczero.org/files/training-" + str(time.strftime("%Y%m%d")) + "-" + str(theCount).zfill(2) + "17.tar")
    length = urlObj.getheader('content-length')
    buf = io.BytesIO()
@@ -98,16 +109,7 @@ def worker(tq):
         downloadItem(item)
         tq.task_done()
 
-parser = argparse.ArgumentParser(description='Process some integers.')
-parser.add_argument('--start', dest='start')
-parser.add_argument('--end', dest='end')
-parser.add_argument('--date', dest='date')
-parser.add_argument('--t', dest='threads')
-args = parser.parse_args()
-start= args.start
-end= args.end
-count = start
-date = args.date
+
 q = Queue()
 q2 = Queue()
 numThreads = int(args.threads)
